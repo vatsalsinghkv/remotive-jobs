@@ -1,0 +1,27 @@
+@use 'sass:math';
+
+// FONTS
+$font-display: 'Poppins', sans-serif;
+$font-primary: 'Roboto', sans-serif;
+$font-size: 1.6rem;
+$font-weight: 400;
+$line-height: 1.5;
+
+// COLORS
+$color-primary: #334680;
+$color-secondary: #1e86ff;
+$color-tertiary: #282538;
+$color-grey: #b9bdcf;
+$color-light: #fff;
+$color-bg: #f6f7fb;
+
+// WIDTH
+$max-width: 120rem;
+
+// BREAK POINTS
+$lg: math.div(1200, 16) * 1em;
+$lg-sm: math.div(1000, 16) * 1em;
+$md: math.div(900, 16) * 1em;
+$md-sm: math.div(680, 16) * 1em;
+$sm: math.div(485, 16) * 1em;
+$sm-sm: math.div(320, 16) * 1em;
