@@ -1,0 +1,24 @@
+@use '../abstract/variables' as *;
+
+.badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  height: fit-content;
+  padding: 0.4rem 0.8rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-radius: 4px;
+
+  color: $color-primary;
+  border: $color-primary solid 1px;
+  background: none;
+
+  &.fill {
+    color: $color-secondary;
+    border: $color-secondary solid 1px;
+    // background: $color-secondary;
+  }
+}

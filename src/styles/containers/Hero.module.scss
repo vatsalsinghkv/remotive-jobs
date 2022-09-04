@@ -1,0 +1,19 @@
+@use '../abstract/variables' as *;
+
+.hero {
+  background-image: url('/assets/backgroundImg.png');
+  background-size: cover;
+  height: 13.8rem;
+  padding: 0 2rem;
+  @media only screen and (max-width: $md-sm) {
+    padding: 0 1rem;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+  &__search-bar {
+    max-width: 79rem;
+  }
+}

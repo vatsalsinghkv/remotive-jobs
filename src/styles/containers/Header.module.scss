@@ -1,0 +1,9 @@
+@use '../abstract/variables' as *;
+
+.header {
+  padding: 3.2rem 0;
+
+  @media only screen and (max-width: $md) {
+    padding-top: 1.2rem;
+  }
+}

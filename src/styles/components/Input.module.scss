@@ -1,0 +1,65 @@
+.form-control {
+  text-transform: capitalize;
+  &:not(:last-of-type) {
+    margin-bottom: 1.5rem;
+  }
+
+  display: flex;
+  align-items: center;
+
+  &__input {
+    margin-right: 18px;
+    position: relative;
+    border: none;
+    visibility: hidden;
+
+    &::after {
+      content: '';
+      visibility: visible;
+      position: absolute;
+      top: 0;
+      left: 5px;
+      transform: translate(-20%, -20%);
+      height: 150%;
+      width: 150%;
+      border: 1px solid var(--color-grey);
+    }
+
+    &:checked::after {
+      border-color: var(--color-secondary);
+    }
+
+    &[type='checkbox'] {
+      &::after {
+        background-color: #fff;
+        border-radius: 2px;
+      }
+
+      &:checked:after {
+        font-family: 'Material Icons';
+        font-size: 18px;
+        content: '\e876';
+        color: #fff;
+        background-color: var(--color-secondary);
+      }
+    }
+
+    &[type='radio'] {
+      &::after {
+        border-radius: 100%;
+      }
+
+      &:checked::before {
+        content: '';
+        visibility: visible;
+        position: absolute;
+        // left: 6px;
+        transform: translate(37%, -4%);
+        height: 95%;
+        width: 95%;
+        border-radius: 100%;
+        background-color: var(--color-secondary);
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@use '../abstract/mixins' as *;
+@use '../abstract/variables' as *;
+
+.select {
+  @include btnReset;
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  min-width: 14.6rem;
+  height: 4.7rem;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  color: var(--color-light);
+  transition: all 0.2s;
+  background-color: $color-secondary;
+  text-overflow: ellipsis;
+
+  @media only screen and (max-width: $sm) {
+    min-width: 10.4rem;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  &:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(#000, 0.1);
+    background-color: darken($color-secondary, 8%);
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: 0 0.5rem 1rem rgba(#000, 0.1);
+  }
+}

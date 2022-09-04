@@ -1,0 +1,12 @@
+.company {
+  display: flex;
+  align-items: center;
+
+  &__content {
+    margin-left: 1.2rem;
+  }
+
+  &__name {
+    margin-bottom: 0.5rem;
+  }
+}

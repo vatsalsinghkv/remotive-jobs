@@ -1,0 +1,114 @@
+@use '../abstract/variables' as *;
+@use '../abstract/mixins' as *;
+
+.button {
+  &,
+  &:link,
+  &:visited {
+    @include btnReset;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    font-weight: 400;
+    width: 14.6rem;
+    height: 4.7rem;
+    padding: 1rem 2rem;
+    color: $color-light;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    // Icon on right
+    svg {
+      margin-left: 1rem;
+    }
+  }
+
+  // PROPERTIES
+  &.sm {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.6rem 0.8rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  &.full-width {
+    width: 100%;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  // VARIANTS
+
+  // Default
+  &.solid {
+    &,
+    &:link,
+    &:visited {
+      background-color: $color-secondary;
+    }
+
+    &:hover {
+      box-shadow: 0 0.75rem 1.5rem rgba(#000, 0.1);
+      background-color: darken($color-secondary, 8%);
+      // transform: translateY(-2px);
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+      box-shadow: 0 0.5rem 1rem rgba(#000, 0.1);
+      // transform: translateY(-1px);
+    }
+  }
+
+  &.outlined {
+    &,
+    &:link,
+    &:visited {
+      // Primary
+      color: $color-primary;
+      border: $color-primary solid 1px;
+      background: none;
+    }
+
+    &:focus,
+    &:hover,
+    &:active {
+      &.light {
+        background-color: $color-light;
+        color: $color-tertiary;
+      }
+
+      background-color: $color-primary;
+      color: $color-light;
+      outline: none;
+    }
+  }
+
+  &.link {
+    &,
+    &:link,
+    &:visited {
+      // Primary
+      color: $color-secondary;
+      padding: 0;
+      border: none;
+      background: none;
+      width: auto;
+      height: auto;
+    }
+
+    &:focus,
+    &:hover,
+    &:active {
+      text-decoration: underline;
+      outline: none;
+    }
+  }
+}
