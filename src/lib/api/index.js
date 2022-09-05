@@ -1,6 +1,10 @@
 import axios from '../services/axios';
 import requests from '../services/requests';
-import { JOBS_PER_PAGE, MIN_JOBS_PER_LOCATION } from '../utils/constant';
+import {
+  JOBS_LIMIT,
+  JOBS_PER_PAGE,
+  MIN_JOBS_PER_LOCATION,
+} from '../utils/constant';
 import { getTotalPages, validateSalary } from '../utils/helper';
 import { setTotalPages } from '../../store/pagination';
 
@@ -10,7 +14,7 @@ import { setTotalPages } from '../../store/pagination';
  * @async
  */
 
-export const getAllJobs = async (limit = null) => {
+export const getAllJobs = async (limit = JOBS_LIMIT) => {
   const res = await axios.get(requests.all(limit));
   return res.data.jobs;
 };

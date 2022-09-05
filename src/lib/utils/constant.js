@@ -10,3 +10,5 @@ export const JOBS_PER_PAGE = 5;
 export const NO_OF_BUTTONS_VISIBLE = 1;
 
 export const MIN_JOBS_PER_LOCATION = 13;
+
+export const JOBS_LIMIT = 500;

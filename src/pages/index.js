@@ -11,7 +11,7 @@ import {
 } from '../store/jobs';
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  const jobs = await getAllJobs(500);
+  const jobs = await getAllJobs();
   store.dispatch(setJobs(jobs));
 
   const categories = await getJobsCategories();
