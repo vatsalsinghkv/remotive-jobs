@@ -5,3 +5,9 @@
   outline: none !important;
   cursor: pointer;
 }
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

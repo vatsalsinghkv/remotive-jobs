@@ -1,3 +1,5 @@
+@use '../abstract/mixins' as *;
+
 .form-control {
   text-transform: capitalize;
   &:not(:last-of-type) {
@@ -36,9 +38,9 @@
       }
 
       &:checked:after {
-        font-family: 'Material Icons';
         font-size: 18px;
-        content: '\e876';
+        @include flexCenter;
+        content: '\2713';
         color: #fff;
         background-color: var(--color-secondary);
       }
@@ -53,7 +55,6 @@
         content: '';
         visibility: visible;
         position: absolute;
-        // left: 6px;
         transform: translate(37%, -4%);
         height: 95%;
         width: 95%;
