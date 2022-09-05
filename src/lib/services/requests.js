@@ -5,7 +5,7 @@ const requests = {
    */
 
   all(limit) {
-    if (limit) return `?limit=10`;
+    if (limit) return `?limit=${limit}`;
     return `/`;
   },
   categories(category = '') {

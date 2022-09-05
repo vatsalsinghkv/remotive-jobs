@@ -16,6 +16,17 @@ import {
 import { getTotalPages } from '../../lib/utils/helper';
 import { setTotalPages } from '../../store/pagination';
 
+/*
+ * Fallback 'false' would not generate pages for the jobId which is not listed above
+ *
+ * Fallback 'true' would generate page for jobId which is not listed above, they'd be a valid value
+ * But they're not pre-generated they're generated when request reaches that path,
+ * so you need to return loader (fallback state) when data isn't available in the component page
+ * This gives us pre-generation for frequently visited pages and postponed-generation for least visited pages
+ *
+ * Fallback 'blocking' would block the page until data is available, so you wouldn't need to return loader (fallback state)
+ */
+
 export const getStaticPaths = async () => {
   const categories = await getJobsCategories();
 
