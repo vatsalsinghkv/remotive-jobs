@@ -1,4 +1,3 @@
-import Hero from '../../containers/Hero';
 import Main from '../../containers/Main';
 import { REVALIDATE_TIME } from '../../lib/utils/constant';
 import { wrapper } from '../../store';
@@ -15,6 +14,8 @@ import {
 } from '../../store/jobs';
 import { getTotalPages } from '../../lib/utils/helper';
 import { setTotalPages } from '../../store/pagination';
+import SEO from '../../components/SEO';
+import { getSeoData } from '../../potfolio';
 
 /*
  * Fallback 'false' would not generate pages for the jobId which is not listed above
@@ -56,14 +57,15 @@ export const getStaticProps = wrapper.getStaticProps((store) => async (ctx) => {
   }
 
   return {
+    props: { category },
     revalidate: REVALIDATE_TIME,
   };
 });
 
-export default function CategoryPage() {
+export default function CategoryPage({ category }) {
   return (
     <>
-      <Hero />
+      <SEO {...getSeoData(category)} />
       <Main />
     </>
   );

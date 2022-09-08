@@ -12,10 +12,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <Layout>
       <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-        />
+        {/* Favicon */}
+        <link rel="apple-touch-icon" sizes="120x120" href="job-search.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="job-search.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="job-search.png" />
       </Head>
       <Component {...pageProps} />
     </Layout>

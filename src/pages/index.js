@@ -1,5 +1,5 @@
-import Hero from '../containers/Hero';
 import Main from '../containers/Main';
+import SEO from '../components/SEO';
 import { REVALIDATE_TIME } from '../lib/utils/constant';
 import { wrapper } from '../store';
 import { getAllJobs, getJobsCategories, getLocations } from '../lib/api';
@@ -9,6 +9,7 @@ import {
   setLocations,
   setSelectedCategory,
 } from '../store/jobs';
+import { getSeoData } from '../lib/utils/portfolio';
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   const jobs = await getAllJobs();
@@ -36,7 +37,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 export default function Home() {
   return (
     <>
-      <Hero />
+      <SEO {...getSeoData()} />
       <Main />
     </>
   );

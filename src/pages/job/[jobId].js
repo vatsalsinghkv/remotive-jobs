@@ -1,5 +1,7 @@
+import SEO from '../../components/SEO';
 import Job from '../../containers/Job';
 import { getJobById } from '../../lib/api';
+import { getJobSeoData } from '../../potfolio';
 
 export const getServerSideProps = async (ctx) => {
   const { jobId } = ctx.params;
@@ -12,5 +14,18 @@ export const getServerSideProps = async (ctx) => {
 
 export default function JobPage({ job }) {
   if (!job) return <h1>Not Found</h1>;
-  return <Job {...job} />;
+  return (
+    <>
+      <SEO
+        {...getJobSeoData({
+          name: job.title,
+          company: job.company_name,
+          category: job.category,
+          salary: job?.salary,
+          location: job.candidate_required_location,
+        })}
+      />
+      <Job {...job} />
+    </>
+  );
 }

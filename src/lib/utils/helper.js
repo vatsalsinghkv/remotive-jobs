@@ -23,6 +23,8 @@ export const trimString = (str, len) => {
   return str;
 };
 
+export const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
 /**
  * Converts givin timestamp to formatted
  * @param {String} time - timestamp
