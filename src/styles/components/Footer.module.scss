@@ -1,0 +1,29 @@
+.footer {
+  // position: fixed;
+  // left: 0;
+  width: 100%;
+  // bottom: 2vh;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: var(--color-grey);
+  text-align: center;
+  margin-top: auto;
+
+  a {
+    &,
+    &:link,
+    &:visited {
+      text-decoration: none;
+      color: currentColor;
+      transition: all 0.2s;
+    }
+
+    &:hover {
+      color: var(--color-secondary);
+    }
+
+    &.name {
+      font-weight: 700;
+    }
+  }
+}
