@@ -1,7 +1,7 @@
 import SEO from '../../components/SEO';
 import Job from '../../containers/Job';
 import { getJobById } from '../../lib/api';
-import { getJobSeoData } from '../../potfolio';
+import { getJobSeoData } from '../../lib/utils/portfolio';
 
 export const getServerSideProps = async (ctx) => {
   const { jobId } = ctx.params;

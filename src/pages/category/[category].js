@@ -15,7 +15,7 @@ import {
 import { getTotalPages } from '../../lib/utils/helper';
 import { setTotalPages } from '../../store/pagination';
 import SEO from '../../components/SEO';
-import { getSeoData } from '../../potfolio';
+import { getSeoData } from '../../lib/utils/portfolio';
 
 /*
  * Fallback 'false' would not generate pages for the jobId which is not listed above
