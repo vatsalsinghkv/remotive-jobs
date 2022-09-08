@@ -1,6 +1,4 @@
-<!-- Please update value in the {}  -->
-
-<h1 align="center">{Your project name}</h1>
+<h1 align="center">{Remotive Jobs}</h1>
 
 <div align="center">
    Solution for a challenge from  <a href="http://devchallenges.io" target="_blank">Devchallenges.io</a>.
@@ -8,11 +6,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://https://remotive-jobs.vercel.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
+    <a href="https://devchallenges.io/solutions/kc9bP1wkX1yLpb6Xjm1m">
       Solution
     </a>
     <span> | </span>
@@ -27,66 +25,172 @@
 ## Table of Contents
 
 - [Overview](#overview)
-  - [Built With](#built-with)
-- [Features](#features)
-- [How to use](#how-to-use)
+  - [The challenge](#the-challenge)
+  - [Features](#features)
+  - [How to use](#how-to-use)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
-<!-- OVERVIEW -->
-
 ## Overview
 
-![screenshot](https://user-images.githubusercontent.com/16707738/92399059-5716eb00-f132-11ea-8b14-bcacdc8ec97b.png)
+![screenshot](https://user-images.githubusercontent.com/68834718/189035104-aa71647e-33e4-442a-a2f9-c0d50bba2db1.png)
 
-Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
+### The challenge
 
-- Where can I see your demo?
-- What was your experience?
-- What have you learned/improved?
-- Your wisdom? :)
+Users should be able to:
 
-### Built With
+- User can see a list of jobs in a city by default
+- User can search for jobs with a given keyword
+- User can search for a full-time job only
+- User can see a list of jobs with their logo, company name, location, and posted time.
+- When user select a job, user can see job descriptions and how to apply like the given design.
+- When user is on the job details page, user can go back to the search page
+- User can see jobs on different pages, 5 items on each page
 
-<!-- This section should list any major frameworks that you built your project using. Here are a few examples.-->
+### Features
 
-- [React](https://reactjs.org/)
-- [Vue.js](https://vuejs.org/)
-- [Tailwind](https://tailwindcss.com/)
-
-## Features
-
-<!-- List the features of your application or follow the template. Don't share the figma file here :) -->
+- App displays list of jobs
+- App displays list of jobs according to the category specified
+- App displays list of jobs according to the location specified
+- App shows the jobs searched by the user
 
 This application/site was created as a submission to a [DevChallenges](https://devchallenges.io/challenges) challenge. The [challenge](https://devchallenges.io/challenges/TtUjDt19eIHxNQ4n5jps) was to build an application to complete the given user stories.
 
-## How To Use
+### How To Use
 
-<!-- Example: -->
-
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [yarn](https://yarnpkg.com) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/your-user-name/your-project-name
+$ git clone https://github.com/vatsalsinghkv/remotive-jobs
 
 # Install dependencies
-$ npm install
+$ yarn
 
 # Run the app
-$ npm start
+$ yarn dev
 ```
 
-## Acknowledgements
+## My process
 
-<!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For example: -->
+### Built With
 
-- [Steps to replicate a design with only HTML and CSS](https://devchallenges-blogs.web.app/how-to-replicate-design/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
+- [Next.js](https://nextjs.org/) - Fullstack Framework
+- [Sass](https://sass-lang.com/) - CSS pre-processor
+- [Redux Toolkit](https://redux-toolkit.js.org/) - State Manager
+- [Axios](https://axios-http.com/) - For HTTP requests
+- [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) - A HOC that brings Next.js and Redux together
+- [react-html-parser](https://www.npmjs.com/package/react-html-parser) - A utility for converting HTML strings into React components
+
+### What I learned
+
+I've learned lot of things in this challenge:
+
+- How to use Redux toolkit for state management in nextjs
+
+```js
+// store/index.js
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+import pagination from './pagination';
+import jobs from './jobs';
+
+const combinedReducer = combineReducers({
+  pagination,
+  jobs,
+});
+
+const masterReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    return {
+      ...state,
+      ...action.payload,
+    };
+  } else {
+    return combinedReducer(state, action);
+  }
+};
+
+const makeStore = () => {
+  return configureStore({
+    reducer: masterReducer,
+  });
+};
+
+const wrapper = createWrapper(makeStore);
+export { makeStore, wrapper };
+```
+
+```js
+// pages/index.js
+import { wrapper } from '../store';
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  const jobs = await getAllJobs();
+  store.dispatch(setJobs(jobs));
+
+  const categories = await getJobsCategories();
+  store.dispatch(setCategories(categories));
+
+  const locations = await getLocations();
+  store.dispatch(setLocations(locations));
+
+  store.dispatch(setSelectedCategory('all'));
+
+  return {
+    props: { jobs },
+  };
+});
+```
+
+- How to use getStaticPaths
+
+```js
+// pages/category/[category].js
+export const getStaticPaths = async () => {
+  const categories = await getJobsCategories();
+  return {
+    paths: categories.map((category) => ({ params: { category } })),
+    fallback: false,
+  };
+};
+```
+
+### Continued development
+
+Technologies I'd be learning soon:
+
+- Typescript
+- Data Structures and Algorithms
+- Material UI
+- Backend Development
+- Blockchain Development
+- Testing (JS)
+- Flutter & Dart
+- Cyber Security
+
+### Useful resources
+
+- [MDN Docs](https://developer.mozilla.org/en-US/) - This is an amazing reference which helped me finally understand detailed concepts like data- attr, aria attr, input range etc.
+- [Nextjs Docs](https://nextjs.org/docs/getting-started) - Best reference to get start with Nextjs
+- [Illustrations](https://storyset.com/) - Best illustrations for errors and warnings etc.
+- [Logo/Icons](https://www.flaticon.com) - Flat Icons best place for free icons
 
 ## Contact
 
-- Website [your-website.com](https://{your-web-site-link})
-- GitHub [@your-username](https://{github.com/your-usermame})
-- Twitter [@your-twitter](https://{twitter.com/your-username})
+- Github - [@vatsalsinghkv](https://github.com/vatsalsinghkv)
+- Twitter - [@vatsalsinghkv](https://www.twitter.com/vatsalsinghkv)
+- Instagram - [@vatsal.sing.hkv](https://www.instagram.com/vatsal.singh.kv)
+- Facebook - [@vatsalsinghkv](https://www.facebook.com/vatsal.singh.kv)
+- devChallenges - [@vatsalsinghkv](https://devchallenges.io/portfolio/vatsalsinghkv)
+- Frontend Mentor - [@vatsalsinghkv](https://www.frontendmentor.io/profile/vatsalsinghkv)
+
+## Acknowledgements
+
+- [Illustrations by Storyset](https://storyset.com/)
+- [Favicon](https://www.flaticon.com/free-icon/search_4234031?related_id=4234031&origin=search)
