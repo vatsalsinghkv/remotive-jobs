@@ -2,15 +2,13 @@
 
 .main {
   padding: 4.2rem 0;
+  padding-bottom: 2.2rem;
   display: grid;
   grid-gap: 3.2rem;
   grid-template-columns: 1.25fr 3fr;
 
   @media only screen and (max-width: $md) {
     grid-template-columns: 1fr;
-  }
-
-  &__aside {
   }
 
   &__jobs {
