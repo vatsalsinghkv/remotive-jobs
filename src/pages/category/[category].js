@@ -1,5 +1,4 @@
 import Main from '../../containers/Main';
-import { REVALIDATE_TIME } from '../../lib/utils/constant';
 import { wrapper } from '../../store';
 import {
   getJobsCategories,
@@ -58,7 +57,6 @@ export const getStaticProps = wrapper.getStaticProps((store) => async (ctx) => {
 
   return {
     props: { category },
-    revalidate: REVALIDATE_TIME,
   };
 });
 
