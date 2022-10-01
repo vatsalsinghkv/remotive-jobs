@@ -2,7 +2,7 @@ export const URL = 'https://remotive.com/api/remote-jobs';
 
 export const TIMEOUT_SEC = 30;
 
-export const REVALIDATE_TIME = 60;
+export const REVALIDATE_TIME = 10;
 
 export const JOBS_PER_PAGE = 5;
 

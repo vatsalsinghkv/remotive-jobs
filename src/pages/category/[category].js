@@ -15,6 +15,7 @@ import { getTotalPages } from '../../lib/utils/helper';
 import { setTotalPages } from '../../store/pagination';
 import SEO from '../../components/SEO';
 import { getSeoData } from '../../lib/utils/portfolio';
+import { REVALIDATE_TIME } from '../../lib/utils/constant';
 
 /*
  * Fallback 'false' would not generate pages for the jobId which is not listed above
@@ -57,6 +58,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async (ctx) => {
 
   return {
     props: { category },
+    revalidate: REVALIDATE_TIME,
   };
 });
 
