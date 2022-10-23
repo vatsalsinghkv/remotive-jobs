@@ -24,7 +24,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   store.dispatch(setSelectedCategory('all'));
 
   return {
-    revalidate: REVALIDATE_TIME,
+    revalidate: 10,
     // notFound: true, // When you gave to return 404 page
     // redirect: {
     //   destination: '/another-route',
