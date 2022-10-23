@@ -10,31 +10,29 @@ import {
 } from '../store/jobs';
 import { getSeoData } from '../lib/utils/portfolio';
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
-    const jobs = await getAllJobs();
-    store.dispatch(setJobs(jobs));
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  const jobs = await getAllJobs();
+  store.dispatch(setJobs(jobs));
 
-    const categories = await getJobsCategories();
-    store.dispatch(setCategories(categories));
+  const categories = await getJobsCategories();
+  store.dispatch(setCategories(categories));
 
-    const locations = await getLocations();
-    store.dispatch(setLocations(locations));
+  const locations = await getLocations();
+  store.dispatch(setLocations(locations));
 
-    store.dispatch(setSelectedCategory('all'));
+  store.dispatch(setSelectedCategory('all'));
 
-    return {
-      props: {
-        jobs,
-      },
-      // revalidate: 10,
-      // notFound: true, // When you gave to return 404 page
-      // redirect: {
-      //   destination: '/another-route',
-      // },
-    };
-  }
-);
+  return {
+    props: {
+      jobs,
+    },
+    revalidate: 10,
+    // notFound: true, // When you gave to return 404 page
+    // redirect: {
+    //   destination: '/another-route',
+    // },
+  };
+});
 
 export default function Home() {
   return (
