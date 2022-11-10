@@ -5,7 +5,6 @@ import { JOBS_PER_PAGE, TIMEOUT_SEC } from './constant';
  * Returns a unique id
  * @returns {String} Unique id format id123..
  */
-
 export const getId = () => `id${Math.random().toString(16).slice(2)}`;
 
 /**
@@ -46,8 +45,7 @@ export const timeFormatter = (time) => {
  * @async
  */
 
-export const FETCH = async (url) =>
-  Promise.race([axios.get(url), timeout(TIMEOUT_SEC)]);
+export const FETCH = async (url) => Promise.race([axios.get(url), timeout(TIMEOUT_SEC)]);
 
 /**
  * Returns a rejected Promise after given seconds
@@ -59,9 +57,7 @@ export const FETCH = async (url) =>
 export const timeout = async function (sec) {
   return new Promise((_, reject) => {
     setTimeout(() => {
-      const err = new Error(
-        `Request took too long! Timeout after ${sec} second`
-      );
+      const err = new Error(`Request took too long! Timeout after ${sec} second`);
       err.code = 500;
       reject(err);
     }, sec * 1000);
