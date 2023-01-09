@@ -9,6 +9,7 @@ import {
   setSelectedCategory,
 } from '../store/jobs';
 import { getSeoData } from '../lib/utils/portfolio';
+import { REVALIDATE_TIME } from '../lib/utils/constant';
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   const jobs = await getAllJobs();
@@ -26,7 +27,7 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     props: {
       jobs,
     },
-    revalidate: 10,
+    revalidate: REVALIDATE_TIME,
     // notFound: true, // When you gave to return 404 page
     // redirect: {
     //   destination: '/another-route',
