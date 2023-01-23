@@ -35,6 +35,9 @@ export const getStaticProps = wrapper.getStaticProps((store) => async () => {
   };
 });
 
+// TODO: Add loading state in getStaticProps will optimization
+// TODO: Optimize each page (reduce the size of the data)
+
 export default function Home() {
   return (
     <>
