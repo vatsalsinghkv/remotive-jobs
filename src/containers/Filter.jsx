@@ -14,7 +14,7 @@ const Filter = ({ className = '', fullTime, locations, selectedLocation }) => {
   const [allLocations] = useState([...locations.all, ...locations.others]);
 
   const searchedLocations = allLocations
-    .filter((l) => l.toLowerCase().includes(searchLocation))
+    .filter((l) => l.toLowerCase().includes(searchLocation.toLowerCase()))
     .slice(0, MAX_LOCATIONS + 2);
 
   const { all, others } = locations;
