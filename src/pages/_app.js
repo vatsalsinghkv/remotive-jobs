@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Layout from '../components/UI/Layout';
-import { wrapper } from '../store';
+import NextNProgress from 'nextjs-progressbar';
 import '../styles/globals.scss';
 
 /*
@@ -10,16 +10,29 @@ import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Head>
-        {/* Favicon */}
-        <link rel="apple-touch-icon" sizes="120x120" href="job-search.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="job-search.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="job-search.png" />
-      </Head>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <NextNProgress color='#1e86ff' height={6} />
+      <Layout>
+        <Head>
+          {/* Favicon */}
+          <link rel='apple-touch-icon' sizes='120x120' href='job-search.png' />
+          <link
+            rel='icon'
+            type='image/png'
+            sizes='32x32'
+            href='job-search.png'
+          />
+          <link
+            rel='icon'
+            type='image/png'
+            sizes='16x16'
+            href='job-search.png'
+          />
+        </Head>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;

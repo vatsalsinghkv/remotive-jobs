@@ -10,8 +10,8 @@ const Form = ({ className, onChange, inputs, value }) => {
       {inputs.map((input) => (
         <Input
           key={getId()}
-          type="radio"
-          name="location"
+          type='radio'
+          name='location'
           checked={value === input}
           label={input}
           value={input}

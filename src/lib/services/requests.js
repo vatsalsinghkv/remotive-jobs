@@ -4,19 +4,14 @@ const requests = {
    * @returns {String} - baseURL/
    */
 
-  all(limit) {
-    if (limit) return `?limit=${limit}`;
+  all(query = '') {
+    if (query) return `/?search=${query}`;
     return `/`;
   },
-  categories(category = '') {
-    if (category) return `?category=${category}`;
+  categories(category = '', query = '') {
+    if (category)
+      return `?category=${category}${query ? '&search=' + query : ''}`;
     return `/categories`;
-  },
-  search(query) {
-    return `search/${query}`;
-  },
-  companyName(company) {
-    return `company_name/${company}`;
   },
 };
 

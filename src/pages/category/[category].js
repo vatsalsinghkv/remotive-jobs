@@ -1,72 +1,80 @@
-import Main from '../../containers/Main';
-import { wrapper } from '../../store';
+import styles from '../../styles/containers/Main.module.scss';
+
 import {
   getJobsCategories,
   getJobsByCategory,
-  getLocations,
+  getJobsPerPage,
 } from '../../lib/api';
-import {
-  setCategories,
-  setJobs,
-  setLocations,
-  setSelectedCategory,
-} from '../../store/jobs';
-import { getTotalPages } from '../../lib/utils/helper';
-import { setTotalPages } from '../../store/pagination';
 import SEO from '../../components/SEO';
 import { getSeoData } from '../../lib/utils/portfolio';
-import { REVALIDATE_TIME } from '../../lib/utils/constant';
+import Hero from '../../containers/Hero';
+import Filter from '../../containers/Filter';
+import Jobs from '../../containers/Jobs';
+import { getTotalPages } from '../../lib/utils/helper';
 
-/*
- * Fallback 'false' would not generate pages for the jobId which is not listed above
- *
- * Fallback 'true' would generate page for jobId which is not listed above, they'd be a valid value
- * But they're not pre-generated they're generated when request reaches that path,
- * so you need to return loader (fallback state) when data isn't available in the component page
- * This gives us pre-generation for frequently visited pages and postponed-generation for least visited pages
- *
- * Fallback 'blocking' would block the page until data is available, so you wouldn't need to return loader (fallback state)
- */
+export const getServerSideProps = async (ctx) => {
+  const { category } = ctx.params;
+  const query = ctx.query?.search ?? '';
+  const page = ctx.query?.page ?? 1;
+  const location = ctx.query?.location ?? 'all';
+  const fullTime = ctx.query?.fullTime;
 
-export const getStaticPaths = async () => {
+  const { jobs, locations } = await getJobsByCategory(
+    category,
+    query,
+    +fullTime,
+    location
+  );
+
   const categories = await getJobsCategories();
+  const totalPages = getTotalPages(jobs.length);
 
   return {
-    paths: categories.map((category) => ({ params: { category } })),
-    fallback: false,
+    props: {
+      jobs: getJobsPerPage(page, jobs),
+      fullTime: +fullTime,
+      currentPage: +page,
+      search: query,
+      totalPages,
+      locations,
+      location,
+      categories,
+      category,
+    },
   };
 };
 
-export const getStaticProps = wrapper.getStaticProps((store) => async (ctx) => {
-  const { category } = ctx.params;
-  store.dispatch(setSelectedCategory(category));
-
-  const jobs = await getJobsByCategory(category);
-  store.dispatch(setJobs(jobs));
-
-  store.dispatch(setTotalPages(getTotalPages(jobs.length)));
-
-  if (!store.getState().jobs.categories.all.length) {
-    const categories = await getJobsCategories();
-    store.dispatch(setCategories(categories));
-  }
-
-  if (!store.getState().jobs.locations.all.length) {
-    const locations = await getLocations(category);
-    store.dispatch(setLocations(locations));
-  }
-
-  return {
-    props: { category },
-    revalidate: REVALIDATE_TIME,
-  };
-});
-
-export default function CategoryPage({ category }) {
+export default function CategoryPage({
+  jobs,
+  categories,
+  category,
+  totalPages,
+  currentPage,
+  fullTime,
+  locations,
+  location,
+  search,
+}) {
   return (
     <>
-      <SEO {...getSeoData(category)} />
-      <Main />
+      <SEO {...getSeoData()} />
+      <Hero
+        categories={categories}
+        selectedCategory={category}
+        search={search}
+      />
+      <main className={styles['main']}>
+        <Filter
+          className={styles['main__aside']}
+          fullTime={fullTime}
+          selectedLocation={location}
+          locations={locations}
+        />
+        <Jobs
+          className={styles['main__jobs']}
+          {...{ jobs, totalPages, currentPage }}
+        />
+      </main>
     </>
   );
 }

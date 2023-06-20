@@ -5,13 +5,13 @@ const Footer = ({ name, github }) => {
   return (
     <footer className={styles.footer}>
       {'created by '}
-      <a className={styles.name} href={github} target="_blank" rel="noreferrer">
+      <a className={styles.name} href={github} target='_blank' rel='noreferrer'>
         {name}
       </a>
-      {' - '}
+      {/*       {' - '}
       <a href="https://www.devchallenges.io/" target="_blank" rel="noreferrer">
         devChallenges.io
-      </a>
+      </a> */}
     </footer>
   );
 };

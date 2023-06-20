@@ -45,7 +45,8 @@ export const timeFormatter = (time) => {
  * @async
  */
 
-export const FETCH = async (url) => Promise.race([axios.get(url), timeout(TIMEOUT_SEC)]);
+export const FETCH = async (url) =>
+  Promise.race([axios.get(url), timeout(TIMEOUT_SEC)]);
 
 /**
  * Returns a rejected Promise after given seconds
@@ -57,7 +58,9 @@ export const FETCH = async (url) => Promise.race([axios.get(url), timeout(TIMEOU
 export const timeout = async function (sec) {
   return new Promise((_, reject) => {
     setTimeout(() => {
-      const err = new Error(`Request took too long! Timeout after ${sec} second`);
+      const err = new Error(
+        `Request took too long! Timeout after ${sec} second`
+      );
       err.code = 500;
       reject(err);
     }, sec * 1000);
@@ -70,5 +73,3 @@ export const timeout = async function (sec) {
  * @returns {Number} Total pages
  */
 export const getTotalPages = (length) => Math.ceil(length / JOBS_PER_PAGE);
-
-export const validateSalary = (salary) => salary.trim().length > 1;

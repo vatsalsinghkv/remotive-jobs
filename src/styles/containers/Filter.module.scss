@@ -1,3 +1,5 @@
+@use '../abstract/variables' as *;
+
 .filter {
   &__heading {
     margin: 3.2rem 0 1.4rem;
@@ -5,5 +7,12 @@
 
   &__form {
     margin-top: 2.5rem;
+
+    @media only screen and (max-width: $md) {
+      display: grid;
+      justify-items: start;
+      column-gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
   }
 }

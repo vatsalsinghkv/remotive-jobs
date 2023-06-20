@@ -1,29 +1,35 @@
 import PaginationButton from './PaginationButton';
-import { useSelector } from 'react-redux';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { getId } from '../../lib/utils/helper';
 import styles from '../../styles/components/Pagination.module.scss';
 
-const Pagination = () => {
-  const { totalPages, currentPage } = useSelector((state) => state.pagination);
-
+const Pagination = ({ totalPages, currentPage }) => {
   if (totalPages <= 1) return;
 
   return (
     <div className={styles['pagination']}>
       {
         <PaginationButton
-          type="prev"
+          totalPages={totalPages}
+          currentPage={currentPage}
+          type='prev'
           number={<IoChevronBack />}
           disable={currentPage === 1}
         />
       }
       {[...Array(totalPages)].map((_, i) => (
-        <PaginationButton key={getId()} number={i + 1} />
+        <PaginationButton
+          key={getId()}
+          number={i + 1}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
       ))}
       {
         <PaginationButton
-          type="next"
+          totalPages={totalPages}
+          currentPage={currentPage}
+          type='next'
           number={<IoChevronForward />}
           disable={currentPage === totalPages}
         />

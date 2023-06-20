@@ -1,12 +1,23 @@
 import axios from '../services/axios';
 import requests from '../services/requests';
-import {
-  JOBS_LIMIT,
-  JOBS_PER_PAGE,
-  MIN_JOBS_PER_LOCATION,
-} from '../utils/constant';
-import { getTotalPages, validateSalary } from '../utils/helper';
-import { setTotalPages } from '../../store/pagination';
+import { JOBS_PER_PAGE, MAX_LOCATIONS } from '../utils/constant';
+
+const filter = ({
+  jobs,
+  fullTime = false,
+  location = 'all',
+  otherLocations = [],
+}) => {
+  return jobs.filter((job) => {
+    return (
+      (!fullTime || job.job_type === 'full_time') &&
+      (location === 'all' ||
+        (location === 'others'
+          ? otherLocations.includes(job.candidate_required_location)
+          : job.candidate_required_location === location))
+    );
+  });
+};
 
 /**
  * Fetches and returns the list of jobs
@@ -14,9 +25,50 @@ import { setTotalPages } from '../../store/pagination';
  * @async
  */
 
-export const getAllJobs = async (limit = JOBS_LIMIT) => {
-  const res = await axios.get(requests.all(limit));
-  return res.data.jobs;
+export const getAllJobs = async (
+  query = '',
+  fullTime = false,
+  location = 'all'
+) => {
+  const res = await axios.get(requests.all(query));
+  const locations = getLocations(res.data.jobs);
+
+  return {
+    jobs: filter({
+      jobs: res.data.jobs,
+      fullTime,
+      otherLocations: locations.others,
+      location,
+    }),
+    locations,
+  };
+};
+
+/**
+ * Fetches and returns job by the given category
+ * @param {String} category - Category for the job
+ * @returns {Array} jobs- Jobs of particular category
+ * @async
+ */
+
+export const getJobsByCategory = async (
+  category = '',
+  query = '',
+  fullTime = false,
+  location = 'all'
+) => {
+  const res = await axios.get(requests.categories(category, query));
+  const locations = getLocations(res.data.jobs);
+
+  return {
+    jobs: filter({
+      jobs: res.data.jobs,
+      fullTime,
+      otherLocations: locations.others,
+      location,
+    }),
+    locations,
+  };
 };
 
 export const getJobsCategories = async () => {
@@ -25,15 +77,7 @@ export const getJobsCategories = async () => {
   return categories;
 };
 
-export const getLocations = async (category = 'all') => {
-  let jobs = [];
-
-  if (category === 'all') {
-    jobs = await getAllJobs();
-  } else {
-    jobs = await getJobsByCategory(category);
-  }
-
+export const getLocations = (jobs) => {
   const locations = [];
   const count = {};
 
@@ -45,26 +89,16 @@ export const getLocations = async (category = 'all') => {
   });
 
   const uniqueLocations = [...new Set(locations)];
-  const otherLocations = uniqueLocations.filter(
-    (loc) => count[loc] < MIN_JOBS_PER_LOCATION
+
+  // Sorting locations with having max jobs
+  const sortedUniqueLocations = uniqueLocations.sort(
+    (a, b) => count[b] - count[a]
   );
 
   return {
-    all: uniqueLocations.filter((loc) => !otherLocations.includes(loc)),
-    others: otherLocations,
+    all: sortedUniqueLocations.slice(0, MAX_LOCATIONS),
+    others: sortedUniqueLocations.slice(MAX_LOCATIONS, -1),
   };
-};
-
-/**
- * Fetches and returns job by the given category
- * @param {String} category - Category for the job
- * @returns {Array} jobs- Jobs of particular category
- * @async
- */
-
-export const getJobsByCategory = async (category = '') => {
-  const res = await axios.get(requests.categories(category));
-  return res.data.jobs;
 };
 
 /**
@@ -75,15 +109,9 @@ export const getJobsByCategory = async (category = '') => {
  */
 
 export const getJobById = async (id) => {
-  const jobs = await getAllJobs();
+  const { jobs } = await getAllJobs();
   const job = jobs.find((job) => job.id.toString() === id);
   return job;
-};
-
-export const getSalaryJobs = async () => {
-  const jobs = await getAllJobs();
-  const salaryJobs = jobs.filter((job) => validateSalary(job.salary));
-  return salaryJobs;
 };
 
 /**
@@ -109,16 +137,4 @@ export const getJobsPerPage = (page, jobs) => {
   return jobs.slice(start, end);
 };
 
-/**
- * Set totalPages in redux store by fetching jobs
- * @param {Object} store - redux store object
- * @return {Array} totalJobs - total number of jobs
- * @async
- */
-
 // enf - export named function
-export const loadTotalPages = async (store) => {
-  const totalJobs = await getAllJobs();
-  store.dispatch(setTotalPages(getTotalPages(totalJobs.length)));
-  return totalJobs;
-};

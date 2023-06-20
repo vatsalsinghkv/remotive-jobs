@@ -1,48 +1,65 @@
-import Main from '../containers/Main';
-import SEO from '../components/SEO';
-import { wrapper } from '../store';
-import { getAllJobs, getJobsCategories, getLocations } from '../lib/api';
-import {
-  setCategories,
-  setJobs,
-  setLocations,
-  setSelectedCategory,
-} from '../store/jobs';
-import { getSeoData } from '../lib/utils/portfolio';
-import { REVALIDATE_TIME } from '../lib/utils/constant';
+import styles from '../styles/containers/Main.module.scss';
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-  const jobs = await getAllJobs();
-  store.dispatch(setJobs(jobs));
+import { getAllJobs, getJobsCategories, getJobsPerPage } from '../lib/api';
+import { getSeoData } from '../lib/utils/portfolio';
+
+import SEO from '../components/SEO';
+import Hero from '../containers/Hero';
+import Filter from '../containers/Filter';
+import Jobs from '../containers/Jobs';
+import { getTotalPages } from '../lib/utils/helper';
+
+export const getServerSideProps = async (ctx) => {
+  const query = ctx.query?.search ?? '';
+  const page = ctx.query?.page ?? 1;
+  const location = ctx.query?.location ?? 'all';
+  const fullTime = ctx.query?.fullTime;
+
+  const { jobs, locations } = await getAllJobs(query, +fullTime, location);
 
   const categories = await getJobsCategories();
-  store.dispatch(setCategories(categories));
-
-  const locations = await getLocations();
-  store.dispatch(setLocations(locations));
-
-  store.dispatch(setSelectedCategory('all'));
+  const totalPages = getTotalPages(jobs.length);
 
   return {
     props: {
-      jobs,
+      jobs: getJobsPerPage(page, jobs),
+      currentPage: +page,
+      categories,
+      totalPages,
+      locations,
+      location,
+      search: query,
+      fullTime: +fullTime,
     },
-    revalidate: REVALIDATE_TIME,
-    // notFound: true, // When you gave to return 404 page
-    // redirect: {
-    //   destination: '/another-route',
-    // },
   };
-});
+};
 
-// TODO: Add loading state in getStaticProps will optimization
-// TODO: Optimize each page (reduce the size of the data)
-
-export default function Home() {
+export default function Home({
+  jobs,
+  categories,
+  totalPages,
+  currentPage,
+  locations,
+  location,
+  fullTime,
+  search,
+}) {
   return (
     <>
       <SEO {...getSeoData()} />
-      <Main />
+      <Hero categories={categories} search={search} />
+      <main className={styles['main']}>
+        <Filter
+          className={styles['main__aside']}
+          fullTime={fullTime}
+          selectedLocation={location}
+          locations={locations}
+        />
+        <Jobs
+          className={styles['main__jobs']}
+          {...{ jobs, totalPages, currentPage }}
+        />
+      </main>
     </>
   );
 }
