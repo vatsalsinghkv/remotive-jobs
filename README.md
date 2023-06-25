@@ -1,31 +1,15 @@
 <h1 align="center">Remotive Jobs</h1>
 
-<div align="center">
-   Solution for a challenge from  <a href="http://devchallenges.io" target="_blank">Devchallenges.io</a>.
-</div>
+<p align="center">
+  A job board based on <a href="https://remotive.com/" target="_blank">remotive.com</a> built with <a href="https://nextjs.org/" target="_blank">Next.js</a> and hosted with <a href="https://vercel.com/" target="_blank">Vercel</a>.
+</p>
 
-<div align="center">
-  <h3>
-    <a href="https://https://remotive-jobs.vercel.app/">
-      Demo
-    </a>
-    <span> | </span>
-    <a href="https://devchallenges.io/solutions/kc9bP1wkX1yLpb6Xjm1m">
-      Solution
-    </a>
-    <span> | </span>
-    <a href="https://devchallenges.io/challenges/TtUjDt19eIHxNQ4n5jps">
-      Challenge
-    </a>
-  </h3>
-</div>
-
-<!-- TABLE OF CONTENTS -->
+[![Remotive Jobs](https://user-images.githubusercontent.com/68834718/189035104-aa71647e-33e4-442a-a2f9-c0d50bba2db1.png)](https://remotive-jobs.vercel.app/)
 
 ## Table of Contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
+  - [User Stories](#user-stories)
   - [Features](#features)
   - [How to use](#how-to-use)
 - [My process](#my-process)
@@ -38,9 +22,7 @@
 
 ## Overview
 
-![screenshot](https://user-images.githubusercontent.com/68834718/189035104-aa71647e-33e4-442a-a2f9-c0d50bba2db1.png)
-
-### The challenge
+### User Stories
 
 Users should be able to:
 
@@ -58,8 +40,6 @@ Users should be able to:
 - App displays list of jobs according to the category specified
 - App displays list of jobs according to the location specified
 - App shows the jobs searched by the user
-
-This application/site was created as a submission to a [DevChallenges](https://devchallenges.io/challenges) challenge. The [challenge](https://devchallenges.io/challenges/TtUjDt19eIHxNQ4n5jps) was to build an application to complete the given user stories.
 
 ### How To Use
 
@@ -82,9 +62,8 @@ $ yarn dev
 
 - [Next.js](https://nextjs.org/) - Fullstack Framework
 - [Sass](https://sass-lang.com/) - CSS pre-processor
-- [Redux Toolkit](https://redux-toolkit.js.org/) - State Manager
 - [Axios](https://axios-http.com/) - For HTTP requests
-- [next-redux-wrapper](https://github.com/kirill-konshin/next-redux-wrapper) - A HOC that brings Next.js and Redux together
+- [nextjs-progressbar](https://github.com/apal21/nextjs-progressbar) - A progress bar (loader), while switching switching pages
 - [react-html-parser](https://www.npmjs.com/package/react-html-parser) - A utility for converting HTML strings into React components
 
 ### What I learned
@@ -183,12 +162,14 @@ Technologies I'd be learning soon:
 
 ## Contact
 
+- Website - [vatsalsinghkv.vercel.app](https://vatsalsinghkv.vercel.app)
 - Github - [@vatsalsinghkv](https://github.com/vatsalsinghkv)
+- LinkedIn - [@vatsalsinghkv](https://www.linkedin.com/in/vatsalsinghkv)
 - Twitter - [@vatsalsinghkv](https://www.twitter.com/vatsalsinghkv)
-- Instagram - [@vatsal.sing.hkv](https://www.instagram.com/vatsal.singh.kv)
+- Instagram - [@vatsalsinghkv](https://www.instagram.com/vatsalsinghkv)
 - Facebook - [@vatsalsinghkv](https://www.facebook.com/vatsal.singh.kv)
 - devChallenges - [@vatsalsinghkv](https://devchallenges.io/portfolio/vatsalsinghkv)
-- Frontend Mentor - [@vatsalsinghkv](https://www.frontendmentor.io/profile/vatsalsinghkv)
+- Frontend Mentor - [@vatsalsinghkv](https://www.frontendmentoår.io/profile/vatsalsinghkv)
 
 ## Acknowledgements
 
